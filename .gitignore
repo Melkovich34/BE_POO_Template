@@ -33,3 +33,7 @@
 
 # WiFi ID
 passwords.h
+
+# MacOS generated files
+.DS_Store
+**/.DS_Store
