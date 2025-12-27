@@ -4,10 +4,13 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include "matriceRGB.h"  
+#include "VibrationMotor.h"  
 
-class  WebServerController{
+
+
+class WebServerController {
 public:
-    WebServerController(uint8_t ledPin, matriceRGB &rgbMatrix);
+    WebServerController(uint8_t ledPin, matriceRGB &rgbMatrix, VibrationMotor &motor);
 
     void begin(const char* ssid, const char* password);
     void handle();
@@ -19,6 +22,8 @@ private:
 
     matriceRGB &matrixController; 
     bool ledStateRGB;
+    
+    VibrationMotor &vibrationMotor;
 
     void handleRoot();
     void handleToggle();

@@ -1,5 +1,6 @@
 #include "WebServerController.h"
 
+
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>
 <html>
@@ -34,12 +35,54 @@ button.RGB{
 <form action="/RGB_Animation">
   <button type="submit" class="RGB">%BTN_TEXT_2%</button>
 </form>
+
+
+<hr>
+
+<h2>Reglage des vibrations</h3>
+
+<div style="width:250px; border:1px solid #aaa; border-radius:10px;">
+  <div id="barre"
+       style="height:20px; width:0%; background:green; border-radius:10px;">
+  </div>
+</div>
+
+<br>
+
+<input
+  id="slider"
+  type="range"
+  min="0"
+  max="200"
+  value="0"
+  style="width:250px;"
+>
+
+<p id="val">Valeur : 0</p>
+
+<script>
+const slider = document.getElementById("slider");
+const barre  = document.getElementById("barre");
+const val    = document.getElementById("val");
+
+// mise à jour visuelle en temps réel
+slider.addEventListener("input", () => {
+  const pct = (slider.value / slider.max) * 100;
+  barre.style.width = pct + "%";
+  val.textContent = "Valeur : " + slider.value;
+});
+slider.addEventListener("change", () => {
+  fetch("/set?niveau=" + slider.value);
+});
+</script>
+
+
 </body>
 </html>
 )rawliteral";
 
-WebServerController::WebServerController(uint8_t ledPin, matriceRGB &rgbMatrix)
-    : server(80), _ledPin(ledPin), ledState(false), matrixController(rgbMatrix), ledStateRGB(false) {}
+WebServerController::WebServerController(uint8_t ledPin, matriceRGB &rgbMatrix, VibrationMotor &motor)
+    : server(80), _ledPin(ledPin), ledState(false), matrixController(rgbMatrix), vibrationMotor(motor), ledStateRGB(false) {}
 
 void WebServerController::begin(const char* ssid, const char* password) {
     pinMode(_ledPin, OUTPUT);
@@ -63,7 +106,7 @@ void WebServerController::begin(const char* ssid, const char* password) {
     server.on("/", [this]() { handleRoot(); });
     server.on("/toggle", [this]() { handleToggle(); });
     server.on("/RGB_Animation", [this]() { handleRGB_Animation(); });
-
+    server.on("/set", [this]() {int val = server.arg("niveau").toInt(); vibrationMotor.setSpeed(val); server.send(200, "text/plain", "OK");});
     server.begin();
 }
 
