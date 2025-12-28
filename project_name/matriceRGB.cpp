@@ -7,11 +7,13 @@ void matriceRGB::begin() {
     Wire.begin();
     SERIAL.begin(115200);
 
-    delay(1000);  // wait for matrix ready
+    delay(1000);                                                        //Attend que matrice soit prête
 
-    matrix.scanGroveTwoRGBLedMatrixI2CAddress();
+    //Connexion I2C 
+    matrix.scanGroveTwoRGBLedMatrixI2CAddress();                
     uint16_t VID = matrix.getDeviceVID();
 
+    /*Test si connexion bien établis*/
     if (VID != 0x2886) {
         SERIAL.println("Can not detect led matrix!!!");
         while (1);
@@ -22,14 +24,14 @@ void matriceRGB::begin() {
 }
 
 void matriceRGB::start(uint32_t interval_ms) {
-    timer.attach_ms(interval_ms, [this]() {
-        this->changeColor();
+    timer.attach_ms(interval_ms, [this]() {                             
+        this->changeColor();                                           
     });
 }
 
 void matriceRGB::stop() {
-    timer.detach();
-    matrix.stopDisplay();
+    timer.detach();                                                   
+    matrix.stopDisplay();                                               
 }
 
 void matriceRGB::changeColor() {
