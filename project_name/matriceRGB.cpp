@@ -25,7 +25,8 @@ void matriceRGB::begin() {
 
 void matriceRGB::start(uint32_t interval_ms) {
     timer.attach_ms(interval_ms, [this]() {                             
-        this->changeColor();                                           
+        this->changeColor();     
+        //Serial.println("We are in the Matrix !");                                      
     });
 }
 

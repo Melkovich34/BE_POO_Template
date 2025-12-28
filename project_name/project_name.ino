@@ -9,11 +9,13 @@
 #include "passwords.h"
 #define LED_PIN LED_BUILTIN
 #define MOTOR_PIN D5
+#define LIGHT_SENSOR_PIN A0   
 
 //Création des instances de class
 matriceRGB rgbMatrix;
 VibrationMotor vibrationMotor(MOTOR_PIN);
-WebServerController webServer(LED_PIN, rgbMatrix, vibrationMotor);
+LightSensor lightSensor(LIGHT_SENSOR_PIN, rgbMatrix, 500);
+WebServerController webServer(LED_PIN, rgbMatrix, vibrationMotor, lightSensor);
 
 
 void setup() {
@@ -23,6 +25,8 @@ void setup() {
   rgbMatrix.begin();
   rgbMatrix.start(1000);
   vibrationMotor.begin();
+  lightSensor.begin();
+  lightSensor.start(250);
   webServer.begin(ssid, password);
 
 }
