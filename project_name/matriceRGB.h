@@ -18,35 +18,35 @@ public:
 /**
  * @brief  Constructeur matriceRGB
  *
- * @details initialisation ledState = false et index = 0
+ * @details Initialisation ledState = false et index = 0
  */
     matriceRGB();
+
 /**
  * @brief  Initialisation matriceRGB
  *
  * @details
- * 
  * - Connexion uc->matrice via I2C
- * - Verification que connexion bien établis
- * - LEDs matrice LED mis à 0
+ * - Vérification que la connexion est bien établie
+ * - LEDs matrice mis à 0
  */
     void begin();
+
 /**
  * @brief  Lancement du timer d'interruption pour contrôle animation sur matriceRGB
  *
  * @details
- * 
  * - Déclenchement contrôlé par appuie des boutons sur site Web
  * - Lors déclenchement interruption, lance fonction changeColor()
  *
- * @param interval_ms : temps déclenchement de interruption
+ * @param interval_ms : temps déclenchement de l'interruption
  */
     void start(uint32_t interval_ms);
+
 /**
  * @brief  Arrêt du timer d'interruption
  *
  * @details
- * 
  * - Déclenchement contrôlé par appuie bouton sur site Web
  * - Désactive le lancement de fonction changeColor()
  * - Eteint les LEDs de matriceRGB
@@ -67,8 +67,7 @@ private:
  * @brief  Changement de couleur sur matriceRGB
  *
  * @details
- * 
- * - Liée à timer lorsque animation est demandé + temps de changer
+ * - Animation cyclique : chaque couleur dure en fonction du timer et lorsque l'on atteint le cptRGB on recommence l'animation
  */
     void changeColor();
 };

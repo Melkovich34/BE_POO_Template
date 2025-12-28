@@ -9,7 +9,6 @@ public:
  * @brief  Constructeur VibrationMotor
  *
  * @details
- * 
  * - Initialisation motorPin = pin, speed = 0;
  * 
  * @param pin : branchement de l'actionneur sur ESP8266
@@ -19,7 +18,6 @@ public:
  * @brief  Initialisation de l'actionneur VibrationMotor
  *
  * @details
- *  
  *  - pin associé à actionneur définis en OUTPUT
  *  - contrôle de vibration via commande analog, initialisé à 0 = pas de vibration
  */
@@ -28,7 +26,6 @@ public:
  * @brief  Sélection de vitesse pour agiter l'actionneur
  *
  * @details
- * 
  *  - Associé et controlé par jauge de vitesse sur site Web
  *
  * @param value : 0 < value < 200 => choix de vitesse
