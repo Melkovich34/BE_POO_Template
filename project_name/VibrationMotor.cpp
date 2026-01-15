@@ -18,3 +18,7 @@ void VibrationMotor::setSpeed(uint8_t value) {
     analogWrite(motorPin, speed);
 }
 
+void VibrationMotor::stop() {
+    speed = 0;
+    analogWrite(motorPin, 0); // Arrêt physique du moteur
+}

@@ -2,8 +2,9 @@
 #define VIBRATION_MOTOR_H
 
 #include <Arduino.h>
+#include "Actuator.h"
 
-class VibrationMotor {
+class VibrationMotor : public Actuator{
 public:
 /**
  * @brief  Constructeur VibrationMotor
@@ -14,6 +15,7 @@ public:
  * @param pin : branchement de l'actionneur sur ESP8266
  */
     VibrationMotor(uint8_t pin);
+
 /**
  * @brief  Initialisation de l'actionneur VibrationMotor
  *
@@ -21,7 +23,16 @@ public:
  *  - pin associé à actionneur définis en OUTPUT
  *  - contrôle de vibration via commande analog, initialisé à 0 = pas de vibration
  */
-    void begin();
+    void begin() override ;
+
+/**
+ * @brief  Arret de l'actionneur VibrationMotor
+ *
+ * @details
+ *  - Arrêt du moteur
+ */
+    void stop() override ;
+
 /**
  * @brief  Sélection de vitesse pour agiter l'actionneur
  *
