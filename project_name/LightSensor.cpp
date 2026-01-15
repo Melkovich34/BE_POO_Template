@@ -34,7 +34,7 @@ void LightSensor::setSeuil(uint8_t value) {
 void LightSensor::controlMatrix(){
   int valeur = readSensor();
   if ((valeur <= _seuil) && (!_animationState)) {
-      _matrix.start(500);
+      _matrix.start(2000);
       _animationState = true;
   } else if ((valeur >= _seuil) && (_animationState)){
       _matrix.stop();

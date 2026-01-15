@@ -4,8 +4,9 @@
 #include <Arduino.h>
 #include <Ticker.h>
 #include "matriceRGB.h"
+#include "Device.h"
 
-class LightSensor {
+class LightSensor : public Device {
 public:
     /**
     * @brief  Constructeur LightSensor
@@ -24,7 +25,7 @@ public:
     * - Initialisation de la Pin en INPUT
     * 
     */
-    void begin();
+    void begin() override ;
 
     /**
     * @brief  Lancement d'un timer pour LightSensor

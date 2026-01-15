@@ -4,6 +4,7 @@
 #include <Ticker.h>
 #include <Wire.h>
 #include "grove_two_rgb_led_matrix.h"
+#include "Actuator.h"
 
 #ifdef SEEED_XIAO_M0
     #define SERIAL Serial
@@ -13,7 +14,7 @@
     #define SERIAL Serial
 #endif
 
-class matriceRGB {
+class matriceRGB : public Actuator{
 public:
 /**
  * @brief  Constructeur matriceRGB
@@ -30,7 +31,7 @@ public:
  * - Vérification que la connexion est bien établie
  * - LEDs matrice mis à 0
  */
-    void begin();
+    void begin() override;
 
 /**
  * @brief  Lancement du timer d'interruption pour contrôle animation sur matriceRGB
@@ -51,7 +52,7 @@ public:
  * - Désactive le lancement de fonction changeColor()
  * - Eteint les LEDs de matriceRGB
  */
-    void stop();
+    void stop() override;
 
 private:
     GroveTwoRGBLedMatrixClass matrix;
