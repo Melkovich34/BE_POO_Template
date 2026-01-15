@@ -7,7 +7,7 @@
 #include "WebServerController.h"
 #include "VibrationMotor.h"  
 #include "passwords.h"
-#define LED_PIN LED_BUILTIN
+#include "DFPlayerMini.h"
 #define MOTOR_PIN D5
 #define LIGHT_SENSOR_PIN A0   
 
@@ -15,13 +15,21 @@
 matriceRGB rgbMatrix;
 VibrationMotor vibrationMotor(MOTOR_PIN);
 LightSensor lightSensor(LIGHT_SENSOR_PIN, rgbMatrix, 500);
-WebServerController webServer(LED_PIN, rgbMatrix, vibrationMotor, lightSensor);
+DFPlayerMini dfplayer(Serial1);
+
+WebServerController webServer( rgbMatrix, vibrationMotor, lightSensor, dfplayer);
 
 
 void setup() {
 
   //Initialisation capteur/actionneur + lancement connexion serveur web
   Serial.begin(115200);
+  Serial1.begin(9600);
+  delay(5000);
+  dfplayer.reset();
+  delay(3000);
+  dfplayer.setVolume(20);
+  delay(1000);
   rgbMatrix.begin();
   rgbMatrix.start(1000);
   vibrationMotor.begin();

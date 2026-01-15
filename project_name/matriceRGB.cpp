@@ -5,7 +5,6 @@ matriceRGB::matriceRGB()
 
 void matriceRGB::begin() {
     Wire.begin();
-    SERIAL.begin(115200);
 
     delay(1000);                                                        //Attend que matrice soit prête
 

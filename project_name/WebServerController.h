@@ -6,21 +6,24 @@
 #include "matriceRGB.h"  
 #include "VibrationMotor.h"
 #include "LightSensor.h"
+#include "DFPlayerMini.h"
 
 
 
 
 class WebServerController {
 public:
-    WebServerController(uint8_t ledPin, matriceRGB &rgbMatrix, VibrationMotor &motor, LightSensor &lightSensor);
+    WebServerController(matriceRGB &rgbMatrix,
+                        VibrationMotor &motor,
+                        LightSensor &light,
+                        DFPlayerMini &player);
 
     void begin(const char* ssid, const char* password);
     void handle();
 
 private:
     ESP8266WebServer server;
-    uint8_t _ledPin;
-    bool ledState;
+
 
     matriceRGB &matrixController; 
     bool ledStateRGB;
@@ -28,12 +31,15 @@ private:
     VibrationMotor &vibrationMotor;
 
     LightSensor &lightSensor;
+    DFPlayerMini &dfplayer;
+
     bool modeAuto = false;
 
     void handleRoot();
     void handleToggle();
     void handleRGB_Animation();
     void handleLightMode();
+    void handleSound();
     String pageHTML();
 };
 
