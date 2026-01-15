@@ -138,7 +138,7 @@ sliderLight.addEventListener("change", () => {
 
 <hr>
 
-<h2>Sons d’ambiance</h2>
+<h2>Ambient song</h2>
 <div class="sound-bar">
 
   <div class="sound-item">
@@ -213,7 +213,17 @@ sliderLight.addEventListener("change", () => {
 // ------------------- Constructeur -------------------
 WebServerController::WebServerController(matriceRGB &rgbMatrix, VibrationMotor &motor, LightSensor &light, DFPlayerMini &player)
     : server(80), matrixController(rgbMatrix), vibrationMotor(motor),
-      lightSensor(light), dfplayer(player), modeAuto(false), ledStateRGB(false){}
+      lightSensor(light), dfplayer(player), modeAuto(false), ledStateRGB(false)
+      {
+        _soundLibrary["Suspicious"]     = 1;
+        _soundLibrary["Farfadet"]        = 2;
+        _soundLibrary["Demogorgon"]      = 3;
+        _soundLibrary["Zelda Mechanism"] = 4;
+        _soundLibrary["Adventure"]       = 5;
+        _soundLibrary["Mickael Jackson"] = 6;
+        _soundLibrary["Rick Roll"]       = 7;
+        _soundLibrary["Mugiwara"]        = 8;
+      }
 
 // ------------------- Initialisation -------------------
 void WebServerController::begin(const char* ssid, const char* password) {
@@ -273,33 +283,16 @@ void WebServerController::handleLightMode() {
 
 void WebServerController::handleSound()
 {
-    String sound = server.arg("play");
-    Serial.println("Sound asked : " + sound);
-    if (sound == "Suspicious") {
-        dfplayer.play(1);
+    String soundAsked = server.arg("play"); 
+    Serial.println("Sound asked : " + soundAsked);
+
+    if (_soundLibrary.count(soundAsked)) {
+        uint16_t trackId = _soundLibrary[soundAsked];
+        dfplayer.play(trackId); 
+    } else {
+        Serial.println("Erreur : Son inconnu !");
     }
-    else if (sound == "Farfadet") {
-        dfplayer.play(2);
-    }
-    else if (sound == "Demogorgon") {
-        dfplayer.play(3);
-    }
-    else if (sound == "Zelda Mechanism") {
-        dfplayer.play(4);
-    }
-    else if (sound == "Adventure") {
-        dfplayer.play(5);
-    }
-    else if (sound == "Mickael Jackson") {
-        dfplayer.play(6);
-    }
-    else if (sound == "Rick Roll") {
-        dfplayer.play(7);
-    }
-    else if (sound == "Mugiwara") {
-        dfplayer.play(8);
-    }
-    server.send(200, "text/html", pageHTML());
+    server.send(200, "text/html", pageHTML()); // Rafraîchit la page
 }
 
 String WebServerController::pageHTML() {

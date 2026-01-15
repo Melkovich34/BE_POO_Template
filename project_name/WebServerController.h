@@ -7,9 +7,7 @@
 #include "VibrationMotor.h"
 #include "LightSensor.h"
 #include "DFPlayerMini.h"
-
-
-
+#include <map>
 
 class WebServerController {
 public:
@@ -63,6 +61,8 @@ private:
     DFPlayerMini &dfplayer;
 
     bool modeAuto = false;
+
+    std::map<String, uint16_t> _soundLibrary;
 
     /**
      * @brief  Contrôle la MAJ de la page HTML
