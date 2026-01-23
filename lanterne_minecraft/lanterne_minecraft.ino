@@ -1,6 +1,3 @@
-// #include <Ultrasonic.h>
-
-// #include "Application.h"
 #include <Arduino.h>
 #include <ChainableLED.h>
 #include "matriceRGB.h"
